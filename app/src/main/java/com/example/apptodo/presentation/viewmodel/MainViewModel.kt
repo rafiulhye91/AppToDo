@@ -9,10 +9,14 @@ import com.example.apptodo.data.model.Task
 import com.example.apptodo.domain.usecase.TaskUseCase
 import com.example.apptodo.presentation.state.TaskListState
 import com.example.apptodo.presentation.state.TaskState
+import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.scopes.ViewModelScoped
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class MainViewModel(private val useCase: TaskUseCase) : ViewModel() {
+@HiltViewModel
+class MainViewModel @Inject constructor(private val useCase: TaskUseCase) : ViewModel() {
 
     private val _mTaskListState: MutableLiveData<TaskListState> = MutableLiveData<TaskListState>()
     private val _mTaskState: MutableLiveData<TaskState> = MutableLiveData<TaskState>()

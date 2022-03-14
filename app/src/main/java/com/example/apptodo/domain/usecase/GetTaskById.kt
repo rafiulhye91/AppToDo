@@ -5,8 +5,9 @@ import com.example.apptodo.data.model.Task
 import com.example.apptodo.domain.repository.TaskRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import javax.inject.Inject
 
-class GetTaskById(private val repository: TaskRepository) {
+class GetTaskById @Inject constructor(private val repository: TaskRepository) {
     operator suspend fun invoke(id: Int): Flow<Resource<Task>> = flow {
         try {
             emit(Resource.Loading())
