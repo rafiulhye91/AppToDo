@@ -7,7 +7,7 @@ import com.example.apptodo.data.model.Task
 @Dao
 interface TaskDao {
     @Query("SELECT * FROM task")
-    suspend fun getAll(): List<Task>
+    suspend fun getAllTasks(): List<Task>
     @Query("SELECT * FROM task WHERE id ==:id")
     suspend fun getTaskById(id:Int): Task
     @Insert(onConflict = REPLACE)
