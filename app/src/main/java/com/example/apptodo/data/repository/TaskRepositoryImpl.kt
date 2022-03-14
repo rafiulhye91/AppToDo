@@ -4,7 +4,7 @@ import com.example.apptodo.data.local.TaskDao
 import com.example.apptodo.data.model.Task
 import com.example.apptodo.domain.repository.TaskRepository
 
-class TaskRepositoryImpl(private val taskDao:TaskDao):TaskRepository {
+class TaskRepositoryImpl(private val taskDao: TaskDao) : TaskRepository {
     override suspend fun getAllTasks(): List<Task> {
         return taskDao.getAllTasks()
     }

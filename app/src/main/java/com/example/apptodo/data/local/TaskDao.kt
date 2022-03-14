@@ -8,12 +8,16 @@ import com.example.apptodo.data.model.Task
 interface TaskDao {
     @Query("SELECT * FROM task")
     suspend fun getAllTasks(): List<Task>
+
     @Query("SELECT * FROM task WHERE id ==:id")
-    suspend fun getTaskById(id:Int): Task
+    suspend fun getTaskById(id: Int): Task
+
     @Insert(onConflict = REPLACE)
-    suspend fun insertTask(task:Task)
+    suspend fun insertTask(task: Task)
+
     @Delete
     suspend fun deleteTask(task: Task)
+
     @Update
     suspend fun updateTask(task: Task)
 }
