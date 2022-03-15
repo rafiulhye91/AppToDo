@@ -15,7 +15,7 @@ class TaskRepositoryImpl @Inject constructor(private val taskDao: TaskDao) : Tas
     }
 
     override suspend fun insertTask(task: Task) {
-        return taskDao.insertTask(task)
+        taskDao.insertTask(task)
     }
 
     override suspend fun deleteTask(task: Task) {
