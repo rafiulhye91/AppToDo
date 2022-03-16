@@ -10,7 +10,7 @@ MVVM, Clean architecture with defined Usecases
 
 **Tools/Libs: **
 
-Android Room Database
-Coroutines for Asynchronous call
-Viewmodel and Livedata for preparing and managing the data for the Activity and Fragment
+Android Room Database\
+Coroutines for Asynchronous call\
+Viewmodel and Livedata for preparing and managing the data for the Activity and Fragments\
 Dagger-hilt dependency injection
