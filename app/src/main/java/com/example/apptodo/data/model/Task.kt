@@ -3,6 +3,7 @@ package com.example.apptodo.data.model
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.util.*
 
 @Entity
 data class Task(
@@ -13,5 +14,5 @@ data class Task(
     @ColumnInfo(name = "details")
     val details: String? = "",
     @ColumnInfo(name = "timestamp")
-    val timestamp: Long? = null
+    val timestamp: Date? = null
 )

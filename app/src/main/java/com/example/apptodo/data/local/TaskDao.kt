@@ -6,7 +6,7 @@ import com.example.apptodo.data.model.Task
 
 @Dao
 interface TaskDao {
-    @Query("SELECT * FROM task")
+    @Query("SELECT * FROM task ORDER BY timestamp DESC")
     suspend fun getAllTasks(): List<Task>
 
     @Query("SELECT * FROM task WHERE id ==:id")
