@@ -1,4 +1,4 @@
-package com.example.apptodo.presentation.ui
+package com.example.apptodo.presentation.ui.fragments
 
 import android.os.Bundle
 import android.util.Log
@@ -10,8 +10,9 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.apptodo.R
 import com.example.apptodo.common.Constants.TAG
 import com.example.apptodo.data.model.Task
@@ -48,8 +49,16 @@ class TaskListFragment : Fragment(R.layout.fragment_task_list), CustomAdapter.On
         mCustomAdapter.setListener(this)
         mBinding.recyclerViewTasks.adapter = mCustomAdapter
         mBinding.recyclerViewTasks.layoutManager = LinearLayoutManager(context)
-        mBinding.recyclerViewTasks
-            .addItemDecoration(DividerItemDecoration(context, LinearLayoutManager.VERTICAL))
+        val swipeToDeleteCallback = object : CustomAdapter.SwipeToDeleteCallback() {
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val pos = viewHolder.adapterPosition
+                val task = mCustomAdapter.removeData(pos)
+                mTaskViewModel.deleteTask(task)
+                mCustomAdapter.notifyItemRemoved(pos)
+            }
+        }
+        val itemTouchHelper = ItemTouchHelper(swipeToDeleteCallback)
+        itemTouchHelper.attachToRecyclerView(mBinding.recyclerViewTasks)
     }
 
     override fun onResume() {

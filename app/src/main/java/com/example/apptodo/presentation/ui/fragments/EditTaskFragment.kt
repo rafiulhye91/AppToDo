@@ -1,12 +1,9 @@
-package com.example.apptodo.presentation.ui
+package com.example.apptodo.presentation.ui.fragments
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.InputMethodManager
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import com.example.apptodo.R
@@ -16,7 +13,7 @@ import com.example.apptodo.databinding.FragmentEditTaskBinding
 import com.example.apptodo.presentation.viewmodel.EditTaskViewModel
 import com.example.apptodo.presentation.viewmodel.TaskViewModel
 
-class EditTaskFragment : Fragment(R.layout.fragment_edit_task) {
+class EditTaskFragment : BaseFragments(R.layout.fragment_edit_task) {
 
     private lateinit var mBinding: FragmentEditTaskBinding
     private val mTaskViewModel: TaskViewModel by activityViewModels()
@@ -60,21 +57,4 @@ class EditTaskFragment : Fragment(R.layout.fragment_edit_task) {
         }
     }
 
-    private fun finishTheFragment() {
-        hideSoftKeyBoard(context, view)
-        val manager = requireActivity().supportFragmentManager
-        manager.popBackStack()
-    }
-
-    fun hideSoftKeyBoard(context: Context?, view: View?) {
-        try {
-            val imm = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            if (view != null) {
-                imm?.hideSoftInputFromWindow(view.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
-            }
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-
-    }
 }

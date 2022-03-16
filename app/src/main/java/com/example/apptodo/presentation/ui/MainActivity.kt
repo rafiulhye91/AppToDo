@@ -1,7 +1,8 @@
-package com.example.apptodo
+package com.example.apptodo.presentation.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.example.apptodo.R
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

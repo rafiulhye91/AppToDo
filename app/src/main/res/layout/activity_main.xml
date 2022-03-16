@@ -3,11 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".presentation.ui.MainActivity">
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragment_container"
-        android:name="com.example.apptodo.presentation.ui.TaskListFragment"
+        android:name="com.example.apptodo.presentation.ui.fragments.TaskListFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

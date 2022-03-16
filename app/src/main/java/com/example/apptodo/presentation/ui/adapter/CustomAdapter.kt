@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.example.apptodo.R
 import com.example.apptodo.data.model.Task
@@ -19,11 +20,11 @@ class CustomAdapter : RecyclerView.Adapter<CustomAdapter.ViewHolder>() {
         }
     }
 
-    private var mList: List<Task> = emptyList()
+    private var mList: MutableList<Task> = mutableListOf<Task>()
     private var mListener: OnItemClickListener? = null
 
     fun setData(list: List<Task>) {
-        mList = list
+        mList = list.toMutableList()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -51,7 +52,33 @@ class CustomAdapter : RecyclerView.Adapter<CustomAdapter.ViewHolder>() {
         mListener = listener
     }
 
+    fun removeData(pos: Int): Task {
+        val task = mList[pos]
+        mList.removeAt(pos)
+        return task
+    }
+
     interface OnItemClickListener {
         fun onItemClicked(task: Task)
     }
+
+    abstract class SwipeToDeleteCallback : ItemTouchHelper.Callback() {
+
+        override fun getMovementFlags(
+            recyclerView: RecyclerView,
+            viewHolder: RecyclerView.ViewHolder
+        ): Int {
+            val swipeFlag = ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
+            return makeMovementFlags(0, swipeFlag)
+        }
+
+        override fun onMove(
+            recyclerView: RecyclerView,
+            viewHolder: RecyclerView.ViewHolder,
+            target: RecyclerView.ViewHolder
+        ): Boolean {
+            return false
+        }
+    }
+
 }
