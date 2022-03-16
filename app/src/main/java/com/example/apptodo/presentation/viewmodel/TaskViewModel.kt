@@ -13,7 +13,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class TaskListViewModel @Inject constructor(private val useCase: TaskUseCase) : ViewModel() {
+class TaskViewModel @Inject constructor(private val useCase: TaskUseCase) : ViewModel() {
 
     private val _mTaskListState: MutableLiveData<TaskListState> = MutableLiveData<TaskListState>()
     private val _mTaskState: MutableLiveData<TaskState> = MutableLiveData<TaskState>()

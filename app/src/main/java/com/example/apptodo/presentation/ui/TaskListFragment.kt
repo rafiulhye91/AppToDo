@@ -10,17 +10,22 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.apptodo.R
 import com.example.apptodo.common.Constants.TAG
+import com.example.apptodo.data.model.Task
 import com.example.apptodo.databinding.FragmentTaskListBinding
-import com.example.apptodo.presentation.viewmodel.TaskListViewModel
+import com.example.apptodo.presentation.ui.adapter.CustomAdapter
+import com.example.apptodo.presentation.viewmodel.TaskViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class TaskListFragment : Fragment(R.layout.fragment_task_list) {
+class TaskListFragment : Fragment(R.layout.fragment_task_list), CustomAdapter.OnItemClickListener {
 
     private lateinit var mBinding: FragmentTaskListBinding
-    private val mViewModel: TaskListViewModel by activityViewModels()
+    private val mViewModel: TaskViewModel by activityViewModels()
+    private lateinit var mCustomAdapter: CustomAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,7 +37,17 @@ class TaskListFragment : Fragment(R.layout.fragment_task_list) {
         mBinding.fab.setOnClickListener {
             launchFragment(NewTaskFragment())
         }
+        mCustomAdapter = CustomAdapter()
+        setRecyclerView()
         return mBinding.root
+    }
+
+    private fun setRecyclerView() {
+        mCustomAdapter.setListener(this)
+        mBinding.recyclerViewTasks.adapter = mCustomAdapter
+        mBinding.recyclerViewTasks.layoutManager = LinearLayoutManager(context)
+        mBinding.recyclerViewTasks
+            .addItemDecoration(DividerItemDecoration(context, LinearLayoutManager.VERTICAL))
     }
 
     override fun onResume() {
@@ -41,17 +56,30 @@ class TaskListFragment : Fragment(R.layout.fragment_task_list) {
             viewLifecycleOwner, Observer {
                 if (!it.tasks.isNullOrEmpty()) {
                     Log.d(TAG, it.tasks.toString())
+                    mCustomAdapter.setData(it.tasks)
+                    mCustomAdapter.notifyDataSetChanged()
                 }
             }
         )
+        mViewModel.getAllTasks()
     }
 
     private fun launchFragment(fragment: Fragment) {
         val fragmentManager: FragmentManager = requireActivity().supportFragmentManager
         val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
+        fragmentTransaction.setCustomAnimations(
+            R.anim.slide_in,
+            R.anim.slide_out,
+            android.R.anim.slide_in_left,
+            android.R.anim.slide_out_right
+        )
         fragmentTransaction.replace(R.id.fragment_container, fragment)
         fragmentTransaction.addToBackStack(null)
         fragmentTransaction.commit()
+    }
+
+    override fun onItemClicked(task: Task) {
+        return
     }
 
 }

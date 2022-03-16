@@ -5,6 +5,12 @@
     android:orientation="vertical"
     android:padding="15dp">
 
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/edit_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Title" />
+
     <EditText
         android:id="@+id/edit_details"
         android:layout_width="match_parent"
@@ -35,12 +41,5 @@
             android:layout_gravity="bottom|right"
             android:text="Cancel" />
     </LinearLayout>
-
-    <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/edit_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Title" />
-
 
 </LinearLayout>
