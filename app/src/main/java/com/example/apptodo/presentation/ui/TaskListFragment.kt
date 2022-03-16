@@ -17,6 +17,7 @@ import com.example.apptodo.common.Constants.TAG
 import com.example.apptodo.data.model.Task
 import com.example.apptodo.databinding.FragmentTaskListBinding
 import com.example.apptodo.presentation.ui.adapter.CustomAdapter
+import com.example.apptodo.presentation.viewmodel.EditTaskViewModel
 import com.example.apptodo.presentation.viewmodel.TaskViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -24,7 +25,8 @@ import dagger.hilt.android.AndroidEntryPoint
 class TaskListFragment : Fragment(R.layout.fragment_task_list), CustomAdapter.OnItemClickListener {
 
     private lateinit var mBinding: FragmentTaskListBinding
-    private val mViewModel: TaskViewModel by activityViewModels()
+    private val mTaskViewModel: TaskViewModel by activityViewModels()
+    private val mEditTaskViewModel: EditTaskViewModel by activityViewModels()
     private lateinit var mCustomAdapter: CustomAdapter
 
     override fun onCreateView(
@@ -52,7 +54,7 @@ class TaskListFragment : Fragment(R.layout.fragment_task_list), CustomAdapter.On
 
     override fun onResume() {
         super.onResume()
-        mViewModel.taskListState.observe(
+        mTaskViewModel.taskListState.observe(
             viewLifecycleOwner, Observer {
                 if (!it.tasks.isNullOrEmpty()) {
                     Log.d(TAG, it.tasks.toString())
@@ -61,7 +63,7 @@ class TaskListFragment : Fragment(R.layout.fragment_task_list), CustomAdapter.On
                 }
             }
         )
-        mViewModel.getAllTasks()
+        mTaskViewModel.getAllTasks()
     }
 
     private fun launchFragment(fragment: Fragment) {
@@ -79,6 +81,8 @@ class TaskListFragment : Fragment(R.layout.fragment_task_list), CustomAdapter.On
     }
 
     override fun onItemClicked(task: Task) {
+        launchFragment(EditTaskFragment())
+        mEditTaskViewModel.setTask(task)
         return
     }
 

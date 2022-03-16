@@ -10,10 +10,12 @@ import com.example.apptodo.data.model.Task
 
 class CustomAdapter : RecyclerView.Adapter<CustomAdapter.ViewHolder>() {
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val textView: TextView
+        val textViewTask: TextView
+        val textViewDate: TextView
 
         init {
-            textView = itemView.findViewById(R.id.text_task)
+            textViewTask = itemView.findViewById(R.id.text_task)
+            textViewDate = itemView.findViewById(R.id.text_date)
         }
     }
 
@@ -31,8 +33,9 @@ class CustomAdapter : RecyclerView.Adapter<CustomAdapter.ViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.textView.text = mList[position].title
-        holder.textView.setOnClickListener {
+        holder.textViewTask.text = mList[position].title
+        holder.textViewDate.text = mList[position].timestamp.toString()
+        holder.itemView.setOnClickListener {
             mListener?.onItemClicked(mList.get(position))
         }
     }

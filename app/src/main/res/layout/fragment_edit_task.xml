@@ -5,14 +5,19 @@
     android:orientation="vertical"
     android:padding="15dp">
 
+    <TextView
+        android:id="@+id/text_timestamp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
     <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/new_title"
+        android:id="@+id/edit_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Title" />
 
     <EditText
-        android:id="@+id/new_details"
+        android:id="@+id/edit_details"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="top|left"
@@ -28,11 +33,11 @@
         android:orientation="horizontal">
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_add"
+            android:id="@+id/btn_save"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|right"
-            android:text="Add" />
+            android:text="Save" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_cancel"

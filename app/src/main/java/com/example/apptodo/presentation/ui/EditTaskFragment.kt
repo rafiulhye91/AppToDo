@@ -6,53 +6,55 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import com.example.apptodo.R
 import com.example.apptodo.data.local.utils.DateConverter
 import com.example.apptodo.data.model.Task
-import com.example.apptodo.databinding.FragmentNewTaskBinding
+import com.example.apptodo.databinding.FragmentEditTaskBinding
+import com.example.apptodo.presentation.viewmodel.EditTaskViewModel
 import com.example.apptodo.presentation.viewmodel.TaskViewModel
 
+class EditTaskFragment : Fragment(R.layout.fragment_edit_task) {
 
-class NewTaskFragment : Fragment(R.layout.fragment_new_task) {
-
-    private lateinit var mBinding: FragmentNewTaskBinding
-    private val mViewModel: TaskViewModel by activityViewModels()
+    private lateinit var mBinding: FragmentEditTaskBinding
+    private val mTaskViewModel: TaskViewModel by activityViewModels()
+    private val mEditTaskViewModel: EditTaskViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        mBinding = FragmentNewTaskBinding.inflate(layoutInflater)
+        mBinding = FragmentEditTaskBinding.inflate(layoutInflater)
         return mBinding.root
     }
 
     override fun onResume() {
         super.onResume()
-        setUI()
+        mEditTaskViewModel.mTask.observe(viewLifecycleOwner, Observer {
+            setUI(it);
+        })
     }
 
-    private fun setUI() {
-        mBinding.btnAdd.setOnClickListener {
-            if (mBinding.newTitle.text!!.length == 0) {
-                Toast.makeText(context, "Please add a title", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
-            val title = mBinding.newTitle.text.toString()
-            val details = mBinding.newDetails.text.toString()
-            mViewModel.addTask(
-                Task(
-                    title = title,
-                    details = details,
-                    timestamp = DateConverter.toDate(System.currentTimeMillis())
-                )
-            )
+    private fun setUI(task: Task) {
+        mBinding.textTimestamp.setText(task.timestamp.toString())
+        mBinding.editTitle.setText(task.title.toString())
+        mBinding.editDetails.setText(task.details.toString())
+        mBinding.btnCancel.setOnClickListener {
             finishTheFragment()
         }
-
+        mBinding.btnSave.setOnClickListener {
+            val updatedTask: Task = Task(
+                task.id,
+                mBinding.editTitle.text.toString(),
+                mBinding.editDetails.text.toString(),
+                DateConverter.toDate(System.currentTimeMillis())
+            )
+            mTaskViewModel.updateTask(updatedTask)
+            finishTheFragment()
+        }
         mBinding.btnCancel.setOnClickListener {
             finishTheFragment()
         }
@@ -75,5 +77,4 @@ class NewTaskFragment : Fragment(R.layout.fragment_new_task) {
         }
 
     }
-
 }
